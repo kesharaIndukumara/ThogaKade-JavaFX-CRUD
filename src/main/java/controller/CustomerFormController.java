@@ -13,6 +13,7 @@ import model.Customer;
 
 import java.net.URL;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -21,6 +22,7 @@ import java.util.ResourceBundle;
 
 public class CustomerFormController implements Initializable {
 
+    public TextField txtAddress;
     @FXML
     private TableColumn colAddress;
 
@@ -45,8 +47,6 @@ public class CustomerFormController implements Initializable {
     @FXML
     private TextField txtSalary;
 
-    @FXML
-    private TextField txtTable;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -57,7 +57,20 @@ public class CustomerFormController implements Initializable {
 
     @FXML
     void btnAddOnAction(ActionEvent event) {
+        try {
+            Connection connection = DBConnection.getInstance().getConnection();
 
+            PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO customer VALUES (?,?,?,?)");
+
+            preparedStatement.setString(1,txtId.getText());
+            preparedStatement.setString(2,txtName.getText());
+            preparedStatement.setString(3,txtAddress.getText());
+            preparedStatement.setDouble(4,Double.parseDouble(txtSalary.getText()));
+
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @FXML

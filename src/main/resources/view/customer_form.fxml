@@ -9,7 +9,6 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane layoutX="1.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.CustomerFormController">
    <children>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#073b68" height="50.0" layoutX="-2.0" layoutY="-1.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="0.0" width="607.0" AnchorPane.topAnchor="-1.0" />
@@ -19,7 +18,7 @@
          </font>
       </Label>
       <TextField fx:id="txtId" layoutX="46.0" layoutY="67.0" prefHeight="17.0" prefWidth="173.0" promptText="ID" />
-      <TextField fx:id="txtTable" layoutX="47.0" layoutY="121.0" prefHeight="17.0" prefWidth="173.0" promptText="ADDRESS" />
+      <TextField fx:id="txtAddress" layoutX="47.0" layoutY="121.0" prefHeight="17.0" prefWidth="173.0" promptText="ADDRESS" />
       <TextField fx:id="txtName" layoutX="366.0" layoutY="67.0" prefHeight="17.0" prefWidth="173.0" promptText="NAME" />
       <TextField fx:id="txtSalary" layoutX="367.0" layoutY="121.0" prefHeight="17.0" prefWidth="173.0" promptText="SALARY" />
       <Button layoutX="548.0" layoutY="157.0" mnemonicParsing="false" onAction="#btnAddOnAction" text="Add" />
