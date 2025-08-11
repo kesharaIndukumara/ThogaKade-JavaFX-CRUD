@@ -1,10 +1,14 @@
 package controller;
 
+import db.DBConnection;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 import model.Customer;
 
 import java.sql.Connection;
@@ -17,19 +21,19 @@ import java.util.List;
 public class CustomerFormController {
 
     @FXML
-    private TableColumn<?, ?> colAddress;
+    private TableColumn colAddress;
 
     @FXML
-    private TableColumn<?, ?> colId;
+    private TableColumn colId;
 
     @FXML
-    private TableColumn<?, ?> colName;
+    private TableColumn colName;
 
     @FXML
-    private TableColumn<?, ?> colSalary;
+    private TableColumn colSalary;
 
     @FXML
-    private TableView<?> tblCustomers;
+    private TableView tblCustomers;
 
     @FXML
     private TextField txtId;
@@ -47,9 +51,7 @@ public class CustomerFormController {
 
     @FXML
     void btnAddOnAction(ActionEvent event) {
-        customerList.forEach(customer -> {
-            System.out.println(customer);
-        });
+
     }
 
     @FXML
@@ -59,7 +61,7 @@ public class CustomerFormController {
 
     @FXML
     void btnReloadOnAction(ActionEvent event) {
-        loadTable();
+        loadData();
     }
 
     @FXML
@@ -72,9 +74,9 @@ public class CustomerFormController {
 
     }
 
-    private void loadTable(){
+    private void loadData(){
         try {
-            Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/thoga_kade", "root", "1234");
+            Connection connection = DBConnection.getInstance().getConnection();
 
             ResultSet resultSet = connection.createStatement().executeQuery("SELECT * FROM customer");
 
@@ -90,6 +92,22 @@ public class CustomerFormController {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+        loadTable();
+    }
+
+    private void loadTable(){
+        //Link column names and Model class variables
+        colId.setCellValueFactory(new PropertyValueFactory<>("id"));
+        colName.setCellValueFactory(new PropertyValueFactory<>("name"));
+        colAddress.setCellValueFactory(new PropertyValueFactory<>("address"));
+        colSalary.setCellValueFactory(new PropertyValueFactory<>("salary"));
+
+        ObservableList<Customer> customerObservableList = FXCollections.observableArrayList();
+        customerList.forEach(customer -> {
+            customerObservableList.add(customer);
+        });
+
+        tblCustomers.setItems(customerObservableList);
     }
 
 }
