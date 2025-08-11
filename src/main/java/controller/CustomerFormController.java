@@ -102,12 +102,15 @@ public class CustomerFormController {
         colAddress.setCellValueFactory(new PropertyValueFactory<>("address"));
         colSalary.setCellValueFactory(new PropertyValueFactory<>("salary"));
 
-        ObservableList<Customer> customerObservableList = FXCollections.observableArrayList();
-        customerList.forEach(customer -> {
-            customerObservableList.add(customer);
-        });
+//            ObservableList<Customer> customerObservableList = FXCollections.observableArrayList();
+//            customerList.forEach(customer -> {
+//                customerObservableList.add(customer);
+//            });
 
-        tblCustomers.setItems(customerObservableList);
+//        tblCustomers.setItems(customerObservableList);
+
+        tblCustomers.setItems(FXCollections.observableArrayList(customerList));
+
     }
 
 }
