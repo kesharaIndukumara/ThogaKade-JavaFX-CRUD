@@ -5,6 +5,7 @@ import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -62,12 +63,14 @@ public class CustomerFormController implements Initializable {
 
             PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO customer VALUES (?,?,?,?)");
 
-            preparedStatement.setString(1,txtId.getText());
+            preparedStatement.setInt(1,Integer.parseInt(txtId.getText()));
             preparedStatement.setString(2,txtName.getText());
             preparedStatement.setString(3,txtAddress.getText());
             preparedStatement.setDouble(4,Double.parseDouble(txtSalary.getText()));
 
-            preparedStatement.executeUpdate();
+            if( preparedStatement.executeUpdate()>0){
+                new Alert(Alert.AlertType.INFORMATION,"Customer Added..!!").show();
+            }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -101,7 +104,7 @@ public class CustomerFormController implements Initializable {
 
             while (resultSet.next()){
                 customerList.add(new Customer(
-                        resultSet.getString(1),
+                        resultSet.getInt(1),
                         resultSet.getString(2),
                         resultSet.getString(3),
                         resultSet.getDouble(4)
