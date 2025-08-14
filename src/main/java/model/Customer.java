@@ -10,7 +10,7 @@ import lombok.ToString;
 @Data
 @ToString
 public class Customer {
-    private Integer id;
+    private String id;
     private String name;
     private String address;
     private Double salary;

@@ -11,6 +11,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import model.Customer;
+import util.CrudUtil;
 
 import java.net.URL;
 import java.sql.Connection;
@@ -59,11 +60,11 @@ public class CustomerFormController implements Initializable {
     @FXML
     void btnAddOnAction(ActionEvent event) {
         try {
-            Connection connection = DBConnection.getInstance().getConnection();
+//            Connection connection = DBConnection.getInstance().getConnection();
 
-            PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO customer VALUES (?,?,?,?)");
+            PreparedStatement preparedStatement = DBConnection.getInstance().getConnection().prepareStatement("INSERT INTO customer VALUES (?,?,?,?)");
 
-            preparedStatement.setInt(1,Integer.parseInt(txtId.getText()));
+            preparedStatement.setString(1,(txtId.getText()));
             preparedStatement.setString(2,txtName.getText());
             preparedStatement.setString(3,txtAddress.getText());
             preparedStatement.setDouble(4,Double.parseDouble(txtSalary.getText()));
@@ -83,7 +84,7 @@ public class CustomerFormController implements Initializable {
 
     @FXML
     void btnReloadOnAction(ActionEvent event) {
-
+        loadData();
     }
 
     @FXML
@@ -98,13 +99,14 @@ public class CustomerFormController implements Initializable {
 
     private void loadData(){
         try {
-            Connection connection = DBConnection.getInstance().getConnection();
+            ResultSet resultSet = CrudUtil.execute("SELECT * FROM customer");
 
-            ResultSet resultSet = connection.createStatement().executeQuery("SELECT * FROM customer");
+//            Connection connection = DBConnection.getInstance().getConnection();
+//            ResultSet resultSet = connection.createStatement().executeQuery("SELECT * FROM customer");
 
             while (resultSet.next()){
                 customerList.add(new Customer(
-                        resultSet.getInt(1),
+                        resultSet.getString(1),
                         resultSet.getString(2),
                         resultSet.getString(3),
                         resultSet.getDouble(4)
