@@ -60,16 +60,17 @@ public class CustomerFormController implements Initializable {
     @FXML
     void btnAddOnAction(ActionEvent event) {
         try {
+            Boolean bool = CrudUtil.execute("INSERT INTO customer VALUES (?,?,?,?)",txtId.getText(),txtName.getText(),txtAddress.getText(),txtSalary.getText());
 //            Connection connection = DBConnection.getInstance().getConnection();
 
-            PreparedStatement preparedStatement = DBConnection.getInstance().getConnection().prepareStatement("INSERT INTO customer VALUES (?,?,?,?)");
+//            PreparedStatement preparedStatement = DBConnection.getInstance().getConnection().prepareStatement("INSERT INTO customer VALUES (?,?,?,?)");
 
-            preparedStatement.setString(1,(txtId.getText()));
-            preparedStatement.setString(2,txtName.getText());
-            preparedStatement.setString(3,txtAddress.getText());
-            preparedStatement.setDouble(4,Double.parseDouble(txtSalary.getText()));
-
-            if( preparedStatement.executeUpdate()>0){
+//            preparedStatement.setString(1,(txtId.getText()));
+//            preparedStatement.setString(2,txtName.getText());
+//            preparedStatement.setString(3,txtAddress.getText());
+//            preparedStatement.setDouble(4,Double.parseDouble(txtSalary.getText()));
+//
+            if(bool){
                 new Alert(Alert.AlertType.INFORMATION,"Customer Added..!!").show();
             }
         } catch (SQLException e) {
@@ -80,6 +81,15 @@ public class CustomerFormController implements Initializable {
     @FXML
     void btnDeleteOnAction(ActionEvent event) {
 
+        try {
+            Boolean bool = CrudUtil.execute("DELETE FROM customer WHERE id = (?);",txtId.getText());
+
+            if(bool){
+                new Alert(Alert.AlertType.INFORMATION,"Customer Deleted..!!").show();
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @FXML
