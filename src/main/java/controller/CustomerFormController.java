@@ -108,11 +108,11 @@ public class CustomerFormController implements Initializable {
     }
 
     private void loadData(){
+        // Clear the customerList before loading new data
+        customerList.clear();
+
         try {
             ResultSet resultSet = CrudUtil.execute("SELECT * FROM customer");
-
-//            Connection connection = DBConnection.getInstance().getConnection();
-//            ResultSet resultSet = connection.createStatement().executeQuery("SELECT * FROM customer");
 
             while (resultSet.next()){
                 customerList.add(new Customer(
